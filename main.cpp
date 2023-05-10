@@ -61,21 +61,26 @@ int main()
     double meanTimesTaken[9] = {0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00};
 
     int *arrayBase = new int[size], *array = new int[size];
+    std::generate(arrayBase, arrayBase + size, std::rand);
+
     std::cout << "Running benchmarks...\n";
     for (int i = 0; i < iterationCount; i++)
     {
-      ArrayUtils::fill(arrayBase, size, 0, 1'000'000);
+      // std::cout << "Running algorithm ";
       for (int algorithmIndex = 0; algorithmIndex < 9; algorithmIndex++)
       {
+        // std::cout << algorithmNames[algorithmIndex] << " | ";
         meanTimesTaken[algorithmIndex] += runBenchmark(*algorithms[algorithmIndex], array, arrayBase, size);
 
         for (int j = 0; j < size - 1; j++)
           if (array[j] > array[j + 1])
           {
-            std::cout << "\n\nalgorithm " << algorithmIndex << " did not correctly sort the array.\n\n";
+            std::cout << "\n\nalgorithm " << algorithmNames[algorithmIndex] << " did not correctly sort the array.\n\n";
             return 0;
           }
       }
+
+      // std::cout << std::endl;
     }
 
     for (int i = 0; i < 9; i++)

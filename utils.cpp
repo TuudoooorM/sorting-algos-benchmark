@@ -1,3 +1,8 @@
+class SortingAlgorithm
+{
+public:
+  virtual void sort(int array[], int size) = 0;
+};
 
 void swap(int &a, int &b)
 {
@@ -13,26 +18,6 @@ void swap(float &a, float &b)
   b = aux;
 }
 
-namespace ArrayUtils
-{
-  int randomIntBetween(int lower, int upper)
-  {
-    return rand() % (upper - lower + 1) + lower;
-  }
-
-  void fill(int array[], int size, int lower, int upper)
-  {
-    for (int i = 0; i < size; i++)
-      array[i] = randomIntBetween(lower, upper);
-  }
-
-  void copy(int from[], int to[], int size)
-  {
-    for (int i = 0; i < size; i++)
-      to[i] = from[i];
-  }
-}
-
 double getTimeTaken(timespec &start, timespec &end)
 {
   double time_taken;
@@ -42,16 +27,11 @@ double getTimeTaken(timespec &start, timespec &end)
   return time_taken;
 }
 
-class SortingAlgorithm
-{
-public:
-  virtual void sort(int array[], int size) = 0;
-};
-
 double runBenchmark(SortingAlgorithm &algorithm, int array[], int arrayBase[], int size)
 {
   timespec start, end;
-  ArrayUtils::copy(arrayBase, array, size);
+  std::copy(arrayBase, arrayBase + size, array);
+
   clock_gettime(CLOCK_MONOTONIC, &start);
   algorithm.sort(array, size);
   clock_gettime(CLOCK_MONOTONIC, &end);
