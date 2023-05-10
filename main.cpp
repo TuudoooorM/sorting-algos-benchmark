@@ -66,6 +66,7 @@ int main()
     std::cout << "Running benchmarks...\n";
     for (int i = 0; i < iterationCount; i++)
     {
+      std::random_shuffle(array, array + size);
       // std::cout << "Running algorithm ";
       for (int algorithmIndex = 0; algorithmIndex < 9; algorithmIndex++)
       {
