@@ -1,9 +1,7 @@
-// https://www.javatpoint.com/bucket-sort
-
 class BucketSort : public SortingAlgorithm
 {
 private:
-  int getMax(int a[], int n) // function to get maximum element from the given array
+  int getMax(int a[], int n)
   {
     int max = a[0];
     for (int i = 1; i < n; i++)
@@ -13,9 +11,9 @@ private:
   }
 
 public:
-  void sort(int a[], int n) // function to implement bucket sort
+  void sort(int a[], int n)
   {
-    int max = getMax(a, n); // max is the maximum element of array
+    int max = getMax(a, n);
     int bucket[max], i;
     for (int i = 0; i <= max; i++)
     {
