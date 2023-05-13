@@ -28,6 +28,19 @@ std::string algorithmNames[9] = {
     "Radix Sort",
     "Shell Sort"};
 
+enum SortingAlgorithms
+{
+  eBubble,
+  eBucket,
+  eCounting,
+  eHeap,
+  eInsertion,
+  eMerge,
+  eQuick,
+  eRadix,
+  eShell
+};
+
 int main()
 {
   srand(time(NULL));
@@ -40,10 +53,9 @@ int main()
     std::cout << "Input how many times to run the benchmarks: ";
     std::cin >> iterationCount;
 
-    std::cout << size << " " << iterationCount << std::endl;
-    if (size > 10'000'000 || size < 0)
+    if (size > 1'000'000 || size < 0)
     {
-      std::cout << "Size should be within [0, 10.000.000]\n";
+      std::cout << "Size should be within [0, 1.000.000]\n";
       continue;
     }
 
@@ -63,14 +75,17 @@ int main()
     int *arrayBase = new int[size], *array = new int[size];
     std::generate(arrayBase, arrayBase + size, std::rand);
 
-    std::cout << "Running benchmarks...\n";
+    // std::cout << "Running benchmarks...\n";
     for (int i = 0; i < iterationCount; i++)
     {
       std::random_shuffle(array, array + size);
-      // std::cout << "Running algorithm ";
+      // std::cout << i << ". Running algorithm ";
       for (int algorithmIndex = 0; algorithmIndex < 9; algorithmIndex++)
       {
-        // std::cout << algorithmNames[algorithmIndex] << " | ";
+        if (size >= 100'000 && algorithmIndex == eBubble || size >= 1'000'000 && algorithmIndex == eCounting)
+          continue;
+
+        std::cout << algorithmNames[algorithmIndex] << " | ";
         meanTimesTaken[algorithmIndex] += runBenchmark(*algorithms[algorithmIndex], array, arrayBase, size);
 
         for (int j = 0; j < size - 1; j++)
